@@ -1,15 +1,18 @@
 name: Codeforces Sync
 on:
   schedule:
-    - cron: '0 */6 * * *' # প্রতি ৬ ঘণ্টা পর পর আপডেট হবে
-  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Codeforces Sync
-        uses: itmo-solutions/codeforces-sync@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Sync Codeforces Solutions
+        uses: lucky-lukas/codeforces-sync-action@main
         with:
-          token: ${{ secrets.GH_TOKEN }}
           handle: ${{ secrets.CF_HANDLE }}
+          token: ${{ secrets.GH_TOKEN }}
