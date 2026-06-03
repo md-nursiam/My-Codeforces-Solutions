@@ -1,18 +1,13 @@
 name: Codeforces Sync
 on:
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Sync Codeforces Solutions
-        uses: lucky-lukas/codeforces-sync-action@main
+      - name: Sync
+        uses: itmo-solutions/codeforces-sync@v1
         with:
-          handle: ${{ secrets.CF_HANDLE }}
           token: ${{ secrets.GH_TOKEN }}
+          handle: ${{ secrets.CF_HANDLE }}
