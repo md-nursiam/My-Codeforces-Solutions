@@ -1,17 +1,17 @@
 name: Codeforces Sync
 on:
   schedule:
-    - cron: '0 */6 * * *' 
-  workflow_dispatch: 
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Sync Codeforces
-        uses: xalanq/cf-to-gh@master
+        uses: actions/checkout@v3
+      - name: Codeforces Sync Action
+        uses: DhyeyThumar/codeforces-sync-action@v1.0.1
         with:
-          handle: ${{ secrets.CF_HANDLE }}
-          token: ${{ secrets.GH_TOKEN }}
+          cf_handle: ${{ secrets.CF_HANDLE }}
+          gh_token: ${{ secrets.GH_TOKEN }}
