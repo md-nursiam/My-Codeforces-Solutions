@@ -10,8 +10,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Codeforces Sync Action
-        uses: DhyeyThumar/codeforces-sync-action@v1.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          cf_handle: ${{ secrets.CF_HANDLE }}
-          gh_token: ${{ secrets.GH_TOKEN }}
+          python-version: '3.x'
+
+      - name: Run Sync Script
+        env:
+          CF_HANDLE: ${{ secrets.CF_HANDLE }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          pip install requests
+          
+          # এখানে একটি ছোট কমান্ড ব্যবহার করে সরাসরি কোড আনা হবে
+          curl -sL https://raw.githubusercontent.com/md-nursiam/cf-sync-script/main/sync.py -o sync.py
+          python sync.py
