@@ -1,31 +1,15 @@
 name: Codeforces Sync
 on:
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *' # প্রতি ৬ ঘণ্টা পর পর আপডেট হবে
+  workflow_dispatch: # ম্যানুয়ালি রান করার জন্য
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Codeforces Sync
+        uses: itmo-solutions/codeforces-sync@v1
         with:
-          python-version: '3.x'
-
-      - name: Run Sync Script
-        env:
-          CF_HANDLE: ${{ secrets.CF_HANDLE }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          REPO_NAME: ${{ github.repository }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          pip install requests
-          
-          # এখানে একটি ছোট কমান্ড ব্যবহার করে সরাসরি কোড আনা হবে
-          curl -sL https://raw.githubusercontent.com/md-nursiam/cf-sync-script/main/sync.py -o sync.py
-          python sync.py
+          token: ${{ secrets.GH_TOKEN }}
+          handle: ${{ secrets.CF_HANDLE }}
